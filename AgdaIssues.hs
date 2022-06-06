@@ -145,7 +145,7 @@ main = do
 
   toFile def (concat [pngPrefix, "age-open", pngSuffix]) $ do
     layout_title .= unwords [ "Open issue age (cumulative),", dateRange ]
-    plotBarsRedGreen $ bars ["days"] $
+    plotBarsRedGreen $ bars ["# with that age in days"] $
       map (\ (age, n) -> (age, [n])) ageByNo
 
   -- Chart for lifetime of closed issues.
@@ -168,16 +168,18 @@ main = do
       -- after @keepLast@ optimized, only keep largest (= last) y-value per x-value
       closedAgeByNo = keepLast $ zip ageclosedissues [1..]
 
+  -- Linear scale
   toFile def (concat [pngPrefix, "age-closed", pngSuffix]) $ do
     layout_title .= unwords [ "Closed issue age (cumulative),", dateRange ]
     -- point_border_width .= 0.0 -- NOT POSSIBLE
     -- setColors [opaque limegreen]
-    plotBarGreen $ bars ["days"] $
+    plotBarGreen $ bars ["# with that age in days"] $
       map (\ (age, n) -> (age, [n])) closedAgeByNo
 
+  -- Logarithmic scale
   toFile def (concat [pngPrefix, "age-closed-log", pngSuffix]) $ do
     layout_title .= unwords [ "Closed issue age logarithmically (cumulative),", dateRange ]
-    plotBarGreen $ bars ["days"] $
+    plotBarGreen $ bars ["# with exp of that age"] $
       map (\ (age, n) -> (LogValue (fromIntegral age), [n])) closedAgeByNo
 
   -- Plot open issues vs. total issues over time.
