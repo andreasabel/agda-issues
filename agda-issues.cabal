@@ -1,0 +1,53 @@
+cabal-version:      >=1.10
+name:               agda-issues
+version:            0.0.0.0
+build-type:         Simple
+
+synopsis:           Some open/closed issues charts (esp. for github projects)
+description:        A scripts to plot some charts to analyse number of issues development over time.
+                    The data is expected in a JSON file (that can be retrieved from the GitHub API).
+category:           Development
+
+-- A URL where users can report bugs.
+-- bug-reports:
+
+license:            BSD3
+license-file:       LICENSE
+author:             Andreas Abel
+copyright:          Andreas Abel
+maintainer:         Andreas Abel
+
+tested-with:
+  GHC == 9.2.3
+  GHC == 9.0.2
+  GHC == 8.10.7
+  GHC == 8.8.4
+  GHC == 8.6.5
+  GHC == 8.4.4
+  GHC == 8.2.2
+  GHC == 8.0.2
+
+extra-source-files:
+    CHANGELOG.md
+    README.md
+
+executable agda-issues
+    main-is:          AgdaIssues.hs
+    hs-source-dirs:   .
+
+    build-depends:
+        base        >= 4.9     && < 5
+      , aeson
+      , bytestring
+      , colour
+      , containers
+      , Chart       >= 1.1
+      , Chart-cairo >= 1.1
+      , time        >= 1.9
+          -- from CHANGELOG of time-1.9: new ISO8601 module for ISO 8601 formatting & parsing
+
+    default-language: Haskell2010
+
+    ghc-options:
+      -Wall
+      -Wcompat

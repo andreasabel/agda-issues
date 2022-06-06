@@ -1,0 +1,5 @@
+*.json
+*.png
+*.pyc
+__pycache__
+/dist-newstyle/
