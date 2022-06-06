@@ -1,2 +1,5 @@
 branches: master
-installed: +all -time -unix
+
+installed: +all -process -time -unix
+  -- time via agda-issues.cabal
+  -- unix, process via extra
