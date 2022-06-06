@@ -1,2 +1,2 @@
 branches: master
-installed: +all -time
+installed: +all -time -unix
