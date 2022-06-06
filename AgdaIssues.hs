@@ -36,6 +36,9 @@ import Graphics.Rendering.Chart.Backend.Cairo
 -- * Configuration
 ------------------------------------------------------------------------
 
+issueSource :: FilePath
+issueSource = "agdaissues.json"
+
 -- | Date when migration to @github@ was complete.
 --   We only consider issues reported after the migration.
 --   For the others, the @created_at@ date is not correct.
@@ -62,7 +65,9 @@ pngPrefix = "agda-issues-"
 
 data AgdaIssues = AgdaIssues
   { agda :: Map Int Issue  -- ^ Maps issue number to 'Issue'.
-      -- Not IntMap, because this has a different encoding/decoding
+      -- Remarks:
+      -- Not IntMap, because this has a different encoding/decoding.
+      -- The field name 'agda' corresponds to what is in the JSON file.
   } deriving (Generic, Show)
 
 -- | Issue information as obtained from github.
@@ -93,7 +98,7 @@ main = do
   ------------------------------------------------------------------------
 
   issues :: AgdaIssues <- do
-    t <- parseFile "agdaissues.json"
+    t <- parseFile issueSource
     case fromJSON t of
         Error   s -> error s
         Success x -> return x
