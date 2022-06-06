@@ -43,6 +43,7 @@ executable agda-issues
       , containers
       , Chart       >= 1.1
       , Chart-cairo >= 1.1
+      , extra
       , time        >= 1.9
           -- from CHANGELOG of time-1.9: new ISO8601 module for ISO 8601 formatting & parsing
 

@@ -14,10 +14,12 @@ module Main
 import GHC.Exts (fromList)
 import GHC.Generics
 
+-- import Control.Arrow ((&&&))
 import Data.Aeson hiding ((.=))
 import Data.ByteString.Lazy.Char8 (ByteString)
 import qualified Data.ByteString.Lazy.Char8 as BS
 import Data.List (sort, sortOn)
+import Data.List.Extra (groupOn)
 import Data.Maybe
 import Data.Map (Map)
 import qualified Data.Map as Map
@@ -131,7 +133,7 @@ main = do
 
       -- Number of issues older than x days
       ageByNo :: [(Int,Int)]
-      ageByNo = zip ageopenissues [1..]
+      ageByNo = keepLast $ zip ageopenissues [1..]
 
   -- putStrLn $ "Open issues: " ++ show (length openissues)
   -- forM_ openissues $ \ (no, i) -> print no
@@ -162,7 +164,9 @@ main = do
 
       -- Number of issues that lived longer than x days
       closedAgeByNo :: [(Int,Int)]
-      closedAgeByNo = zip ageclosedissues [1..]
+      -- unoptimized, contains several y-values for some x-values (smaller y-values will be overwritten in chart)
+      -- after @keepLast@ optimized, only keep largest (= last) y-value per x-value
+      closedAgeByNo = keepLast $ zip ageclosedissues [1..]
 
   toFile def (concat [pngPrefix, "age-closed", pngSuffix]) $ do
     layout_title .= unwords [ "Closed issue age (cumulative),", dateRange ]
@@ -224,6 +228,7 @@ main = do
     plotBarsRedGreen b = plot $ barsRedGreen <$> b
     plotBarGreen     b = plot $ barGreen     <$> b
 
+-- ** Plotting helpers
 
 solidGreen, solidRed :: FillStyle
 solidGreen = FillStyleSolid $ opaque limegreen
@@ -241,6 +246,12 @@ barsRedGreen =
   . set plot_bars_style BarsStacked
   . set plot_bars_item_styles (map (,Nothing) [ solidRed, solidGreen ])
 
+-- ** Data helpers
+
+-- | Given a sorted list of (x,y) pairs, keep for each x-value only the largest (= last) y-value.
+
+keepLast :: Eq y => [(x,y)] -> [(x,y)]
+keepLast = map last . groupOn snd
 
 ------------------------------------------------------------------------
 -- * Auxiliary functions
