@@ -18,8 +18,8 @@ import GHC.Generics
 import Data.Aeson hiding ((.=))
 import Data.ByteString.Lazy.Char8 (ByteString)
 import qualified Data.ByteString.Lazy.Char8 as BS
-import Data.List (sort, sortOn)
-import Data.List.Extra (groupOn)
+import Data.Function (on)
+import Data.List (groupBy, sort, sortOn)
 import Data.Maybe
 import Data.Map (Map)
 import qualified Data.Map as Map
@@ -270,6 +270,11 @@ keepLast = map last . groupOn snd
 p &&? q = \ x -> p x && q x
 
 infixl 2 &&?
+
+-- | Naive implementation of 'groupOn'.
+
+groupOn :: Eq b => (a -> b) -> [a] -> [[a]]
+groupOn f = groupBy ((==) `on` f)
 
 -- | Time parsing from github/python formatted zoned-time values.
 
