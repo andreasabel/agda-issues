@@ -4,6 +4,16 @@ This contains a Python script that fetches all issues of the `github.com/agda/ag
 A Haskell script then calculates the count of open and closed issues via some charts.
 With some editing, this can be used on other repos as well.
 
+## Python environment
+
+Set up a python environment in the standard way, e.g., by following
+https://stackoverflow.com/questions/43069780/how-to-create-virtual-env-with-python-3 .
+
+        python3 -m venv .venv
+        source .venv/bin/activate
+
+Check that this is working by running `which python`.
+
 ## Requirements
 
 Install the requirements
@@ -32,6 +42,8 @@ which saves GitHub API requests and speeds the overall process up.
 ## Building the charts
 
 Edit in `AgdaIssues.hs` some constants, e.g. concerning dates and input and output file names.
+By default you only need to make a link `agdaissues.json` to the file created in the previous step.
+The output file names are by default carrying today's date.
 
 Run the script:
 
@@ -44,4 +56,4 @@ analysis charts of open and closed issues.
 
 The script `import_issues.py` has been modified from https://github.com/MorrisJobke/github-issue-counter which has been released under the MIT licence.
 
-The rest is (C) 2017-22 Andreas Abel released under BSD 3-clause.
+The rest is (C) 2017-25 Andreas Abel released under BSD 3-clause.
