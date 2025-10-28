@@ -1,5 +1,7 @@
+*~
 *.json
 *.png
 *.pyc
 __pycache__
 /dist-newstyle/
+stack*.yaml.lock
