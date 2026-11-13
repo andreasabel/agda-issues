@@ -10,7 +10,7 @@ from json_helpers import DateTimeEncoder
 GITHUB_TOKEN = os.environ['GITHUB_TOKEN']
 ORG = 'agda'
 REPO = 'agda'
-FILENAME_ISSUES = ORG + '-2022-06-06-' + 'issues.json'
+FILENAME_ISSUES = ORG + '-2026-11-12-' + 'issues.json'
 
 data = {}
 
